@@ -1,7 +1,4 @@
-package tP_formation;
-
 import java.util.HashMap;
-import java.util.Map;
 
 public class Formation {
     private int ID;
@@ -34,11 +31,11 @@ public class Formation {
 
 
     public Float getcoeff(String matiereName) {
+
         return this.matiere.get(matiereName);
     }
-
-    // Méthode pour obtenir toutes les matières
     public HashMap<String, Float> getMatiere() {
+
         return this.matiere;
     }
 }
