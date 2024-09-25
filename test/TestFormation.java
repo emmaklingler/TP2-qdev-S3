@@ -53,4 +53,5 @@ class TestFormation {
         assertEquals(14.0, formation.getMatiere().get("Chimie"));
         assertEquals(13.5, formation.getMatiere().get("Biologie"));
     }
+
 }
