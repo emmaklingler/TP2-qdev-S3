@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class Formation {
     private int ID;
-    private HashMap<String, Float> matiere;
+    private HashMap<String, Double> matiere;
 
     public Formation(int ID) {
         this.ID = ID;
@@ -10,7 +10,7 @@ public class Formation {
     }
 
 
-    public void ajouterMatiere(HashMap<String, Float> matierep) {
+    public void ajouterMatiere(HashMap<String, Double> matierep) {
         for (String key : matierep.keySet()) {
             if (!this.matiere.containsKey(key)) {
                 this.matiere.put(key, matierep.get(key));
@@ -30,11 +30,11 @@ public class Formation {
     }
 
 
-    public Float getcoeff(String matiereName) {
+    public Double getcoeff(String matiereName) {
 
         return this.matiere.get(matiereName);
     }
-    public HashMap<String, Float> getMatiere() {
+    public HashMap<String, Double> getMatiere() {
 
         return this.matiere;
     }

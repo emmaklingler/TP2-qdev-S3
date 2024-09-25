@@ -48,9 +48,9 @@ public class Etudiant {
         double totalCoefficients = 0;
 
 
-        for (Map.Entry<String, Float> entry : formation.getMatiere().entrySet()) {
+        for (Map.Entry<String, Double> entry : formation.getMatiere().entrySet()) {
             String nomMatiere = entry.getKey();
-            float coeff = formation.getcoeff(nomMatiere);
+            double coeff = formation.getcoeff(nomMatiere);
 
             if (resultats.containsKey(nomMatiere)) {
                 double moyenneMatiere = calculerMoyenne(nomMatiere);
@@ -64,5 +64,9 @@ public class Etudiant {
         }
 
         return sommePonderee / totalCoefficients; 
+    }
+
+    public Formation getFormation() {
+        return formation;
     }
 }
