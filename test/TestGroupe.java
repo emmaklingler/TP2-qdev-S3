@@ -24,7 +24,7 @@ public class TestGroupe {
         matieres.put("Mathématiques", 12.5);
         matieres.put("Informatique", 15.0);
         matieres.put("Physique", 10.0); // Ajout de Physique avec un coefficient
-        formation1.ajouterMatiere(matieres); // Assurez-vous que vous avez une méthode pour ajouter plusieurs matières.
+        formation1.ajouterMatiere(matieres);
 
         // Création des étudiants
         etudiant1 = new Etudiant(identite1, formation1);
@@ -32,10 +32,10 @@ public class TestGroupe {
 
         // Ajout de notes pour les étudiants
         etudiant1.ajouterNote("Mathématiques", 15.0);
-        etudiant1.ajouterNote("Physique", 12.0); // Ajout d'une note pour Physique
+        etudiant1.ajouterNote("Physique", 12.0);
         etudiant1.ajouterNote("Informatique", 14.0);
         etudiant2.ajouterNote("Mathématiques", 18.0);
-        etudiant2.ajouterNote("Physique", 14.0); // Ajout d'une note pour Physique
+        etudiant2.ajouterNote("Physique", 14.0);
         etudiant2.ajouterNote("Informatique", 16.0);
 
         // Création du groupe avec le nom et la formation
@@ -95,7 +95,7 @@ public class TestGroupe {
         Etudiant etudiant = new Etudiant(identite, formation1);
         groupeSansNotes.ajouterEtudiant(etudiant); // Ajout d'un étudiant sans notes
 
-        // Vérifier que l'exception est bien levée
+
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             groupeSansNotes.calculerMoyenneMatiere("Mathématiques");
         });
@@ -104,14 +104,13 @@ public class TestGroupe {
 
     @Test
     public void testCalculerMoyenneGenerale() throws Exception {
-        // Assure you have correct notes for the average to be 14.25
+
         double moyenneGenerale = groupe.calculerMoyenneGenerale();
         assertEquals(14.97, moyenneGenerale, 0.001, "La moyenne générale du groupe devrait être 15.0.");
     }
 
     @Test
     public void testCalculerMoyenneGSansNotes() {
-        // Create a group without any students or notes
         Groupe groupeVide = new Groupe("Groupe Vide", formation1);
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             groupeVide.calculerMoyenneGenerale();

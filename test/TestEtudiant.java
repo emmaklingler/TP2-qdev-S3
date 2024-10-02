@@ -13,13 +13,13 @@ public class TestEtudiant {
     @BeforeEach
     public void setUp() {
         identite = new Identite("1", "Emma", "Klingler");
-        formation = new Formation(1); // initialisation de la formation avec un identifiant
+        formation = new Formation(1);
 
         // Ajout des matières avec leurs coefficients
         HashMap<String, Double> matieres = new HashMap<>();
         matieres.put("Mathématiques", 12.5);
         matieres.put("Informatique", 15.0);
-        formation.ajouterMatiere(matieres); // Assurez-vous que cette méthode existe dans la classe Formation
+        formation.ajouterMatiere(matieres);
 
         etudiant = new Etudiant(identite, formation);
     }
@@ -27,13 +27,13 @@ public class TestEtudiant {
     @Test
     public void testAjouterNoteValide() throws Exception {
         etudiant.ajouterNote("Mathématiques", 15.0);
-        assertEquals(15.0, etudiant.calculerMoyenne("Mathématiques"), 0.001); // delta pour comparer les doubles
+        assertEquals(15.0, etudiant.calculerMoyenne("Mathématiques"), 0.001);
     }
 
     @Test
     public void testAjouterNoteInvalideHorsLimite() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            etudiant.ajouterNote("Mathématiques", 25.0); // note en dehors de la plage 0-20
+            etudiant.ajouterNote("Mathématiques", 25.0);
         });
         assertEquals("La note doit être entre 0 et 20.", exception.getMessage());
     }
@@ -59,7 +59,7 @@ public class TestEtudiant {
     public void testCalculerMoyenneValide() throws Exception {
         etudiant.ajouterNote("Mathématiques", 15.0);
         etudiant.ajouterNote("Mathématiques", 10.0);
-        assertEquals(12.5, etudiant.calculerMoyenne("Mathématiques"), 0.001); // delta pour les doubles
+        assertEquals(12.5, etudiant.calculerMoyenne("Mathématiques"), 0.001);
     }
 
     @Test
@@ -70,12 +70,12 @@ public class TestEtudiant {
 
         double moyenneGenerale = etudiant.calculerMoyenneGenerale();
 
-        // Comparer la moyenne générale calculée avec la valeur attendue (vérifie aussi les coefficients)
+
         double sommePonderee = (15.0 * 12.5 + (14.0 + 16.0) / 2 * 15.0);
         double totalCoeff = 12.5 + 15.0;
         double expectedMoyenneGenerale = sommePonderee / totalCoeff;
 
-        assertEquals(expectedMoyenneGenerale, moyenneGenerale, 0.001); // delta pour comparer les doubles
+        assertEquals(expectedMoyenneGenerale, moyenneGenerale, 0.001);
     }
 
     @Test
