@@ -1,18 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Etudiant {
-
     private Identite identite;
-    private List<String> matieres;          // Liste des matières
-    private List<List<Double>> notesParMatiere;  // Liste des notes pour chaque matière
+    private HashMap<String, List<Double>> notesParMatiere; // map of subject names and their respective grades
     private Formation formation;
 
-    public Etudiant(Identite id, Formation formation1) {
+    public Etudiant(Identite id, Formation formation) {
         this.identite = id;
-        this.formation = formation1;
-        this.matieres = new ArrayList<>();
-        this.notesParMatiere = new ArrayList<>();
+        this.formation = formation;
+        this.notesParMatiere = new HashMap<>();
     }
 
     public void ajouterNote(String nomMatiere, double note) throws Exception {
@@ -23,56 +21,47 @@ public class Etudiant {
             throw new IllegalArgumentException("La matière n'existe pas dans la formation.");
         }
 
-        int indexMatiere = matieres.indexOf(nomMatiere);
-        if (indexMatiere == -1) {
-            // Si la matière n'existe pas encore, on l'ajoute
-            matieres.add(nomMatiere);
-            List<Double> notes = new ArrayList<>();
-            notes.add(note);
-            notesParMatiere.add(notes);
-        } else {
-            // Si la matière existe, on ajoute la note à la liste correspondante
-            notesParMatiere.get(indexMatiere).add(note);
-        }
+        notesParMatiere.computeIfAbsent(nomMatiere, k -> new ArrayList<>()).add(note);
     }
 
     public double calculerMoyenne(String nomMatiere) throws Exception {
-        int indexMatiere = matieres.indexOf(nomMatiere);
-        if (indexMatiere == -1 || notesParMatiere.get(indexMatiere).isEmpty()) {
+        if (!notesParMatiere.containsKey(nomMatiere) || notesParMatiere.get(nomMatiere).isEmpty()) {
             throw new IllegalStateException("Aucune note disponible pour la matière.");
         }
 
-        List<Double> notes = notesParMatiere.get(indexMatiere);
-        double somme = 0;
-        for (double note : notes) {
-            somme += note;
-        }
-        return somme / notes.size(); // Calcul de la moyenne
+        List<Double> notes = notesParMatiere.get(nomMatiere);
+        double somme = notes.stream().mapToDouble(Double::doubleValue).sum();
+        return somme / notes.size();
     }
 
     public double calculerMoyenneGenerale() throws Exception {
-        double sommePonderee = 0;
-        double totalCoefficients = 0;
+        double somme = 0;
+        double poidsTotal = 0;
 
-        for (int i = 0; i < matieres.size(); i++) {
-            String nomMatiere = matieres.get(i);
-            double coeff = formation.getcoeff(nomMatiere);
-
-            if (!notesParMatiere.get(i).isEmpty()) {
-                double moyenneMatiere = calculerMoyenne(nomMatiere);
-                sommePonderee += moyenneMatiere * coeff;
-                totalCoefficients += coeff;
+        for (String matiere : formation.getMatiere().keySet()) {
+            try {
+                double coef = formation.getMatiere().get(matiere);
+                double moyenne = calculerMoyenne(matiere);
+                somme += moyenne * coef;
+                poidsTotal += coef;
+            } catch (IllegalStateException e) {
+                // Ignore les matières sans notes
             }
         }
 
-        if (totalCoefficients == 0) {
-            throw new IllegalStateException("Aucune note enregistrée pour calculer la moyenne générale.");
+        if (poidsTotal == 0) {
+            throw new IllegalStateException("Aucune note disponible pour calculer la moyenne générale.");
         }
 
-        return sommePonderee / totalCoefficients; // Calcul de la moyenne générale
+        return Math.round((somme / poidsTotal) * 100.0) / 100.0; // Arrondi à 2 décimales
     }
+
 
     public Formation getFormation() {
         return formation;
+    }
+
+    public Identite getIdentite() {
+        return identite;
     }
 }
