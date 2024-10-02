@@ -75,4 +75,9 @@ public class Etudiant {
     public Formation getFormation() {
         return formation;
     }
+
+    // Getter pour l'objet Identite
+    public Identite getIdentite() {
+        return identite;
+    }
 }
