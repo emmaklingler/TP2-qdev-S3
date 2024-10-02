@@ -1,9 +1,8 @@
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
-
-import static org.junit.Assert.*;
 
 public class TestEtudiant {
 
@@ -25,7 +24,7 @@ public class TestEtudiant {
     @Test
     public void testAjouterNoteValide() throws Exception {
         etudiant.ajouterNote("Mathématiques", 15.0);
-        assertEquals(15.0, etudiant.calculerMoyenne("Mathématiques"));
+        assertEquals(15.0, etudiant.calculerMoyenne("Mathématiques"), 0.001); // ajout du delta
     }
 
     @Test
@@ -53,20 +52,18 @@ public class TestEtudiant {
     }
 
     @Test
-    public void testCalculerMoyenneAucuneNote(){
+    public void testCalculerMoyenneAucuneNote() {
         Exception exception = assertThrows(IllegalStateException.class, () -> {
             etudiant.calculerMoyenne("Mathématiques");
         });
-
         assertEquals("Aucune note disponible pour la matière.", exception.getMessage());
     }
-
 
     @Test
     public void testCalculerMoyenneValide() throws Exception {
         etudiant.ajouterNote("Mathématiques", 15.0);
         etudiant.ajouterNote("Mathématiques", 10.0);
-        assertEquals(12.5, etudiant.calculerMoyenne("Mathématiques"));
+        assertEquals(12.5, etudiant.calculerMoyenne("Mathématiques"), 0.001); // ajout du delta
     }
 
     @Test
@@ -87,4 +84,3 @@ public class TestEtudiant {
         assertEquals("Aucune note enregistrée pour calculer la moyenne générale.", exception.getMessage());
     }
 }
-
