@@ -40,7 +40,7 @@ public class Groupe {
         return etudiants.remove(etudiant);
     }
 
-<<<<<<< HEAD
+
     public List<Etudiant> triAlpha() {
         List<Etudiant> etudiantsListe = new ArrayList<>(etudiants);
         Collections.sort(etudiantsListe, Comparator.comparing(e -> e.getIdentite().getNom()));
@@ -53,13 +53,6 @@ public class Groupe {
         return etudiantsListe;
     }
 
-    public double calculerMoyenneMatiere(String nomMatiere) throws Exception {
-        if (!formation.getMatiere().containsKey(nomMatiere)) {
-            throw new IllegalArgumentException("La matière " + nomMatiere + " n'existe pas dans la formation.");
-        }
-
-        double sommeMoyenne = 0;
-=======
     // Méthode pour trier les étudiants par leur moyenne générale
     public List<Etudiant> triParMerite() {
         List<Etudiant> etudiantsListe = new ArrayList<>(etudiants);
@@ -81,63 +74,28 @@ public class Groupe {
     }
 
 
-    // Méthode pour calculer la moyenne pour une matière (ajouter ici si nécessaire)
     public double calculerMoyenneMatiere(String nomMatiere) throws Exception {
         // Implémente la logique de calcul de la moyenne pour une matière ici
+        double sommeMoyenne = 0;
         double somme = 0;
->>>>>>> 8f0e40be3d67e3006b3ae4b48329f7384c8ce478
         int count = 0;
 
         for (Etudiant etudiant : etudiants) {
             try {
-<<<<<<< HEAD
                 sommeMoyenne += etudiant.calculerMoyenne(nomMatiere);
-=======
                 double moyenne = etudiant.calculerMoyenne(nomMatiere);
                 somme += moyenne;
->>>>>>> 8f0e40be3d67e3006b3ae4b48329f7384c8ce478
                 count++;
             } catch (IllegalStateException e) {
-                // Ignorer les étudiants sans notes pour cette matière
             }
         }
-
         if (count == 0) {
-<<<<<<< HEAD
             throw new IllegalStateException("Aucune note disponible pour la matière " + nomMatiere);
         }
 
         return sommeMoyenne / count;
     }
 
-    public double calculerMoyenneGenerale() throws Exception {
-        double sommeMoyenne = 0;
-        int count = 0;
-
-        for (Etudiant etudiant : etudiants) {
-            try {
-                sommeMoyenne += etudiant.calculerMoyenneGenerale();
-                count++;
-            } catch (IllegalStateException e) {
-                // Ignorer les étudiants sans notes
-            }
-        }
-
-        if (count == 0) {
-            throw new IllegalStateException("Aucune note disponible pour calculer la moyenne générale.");
-        }
-
-        return Math.round((sommeMoyenne / count) * 100.0) / 100.0; // Arrondi à 2 décimales
-    }
-
-=======
-            throw new IllegalStateException("Aucune note disponible pour calculer la moyenne de cette matière.");
-        }
-
-        return somme / count;
-    }
-
-    // Méthode pour calculer la moyenne générale (ajouter ici si nécessaire)
     public double calculerMoyenneGenerale() throws Exception {
         double sommePonderee = 0;
         double totalCoefficients = 0;
@@ -157,5 +115,4 @@ public class Groupe {
 
         return sommePonderee / totalCoefficients;
     }
->>>>>>> 8f0e40be3d67e3006b3ae4b48329f7384c8ce478
 }

@@ -14,23 +14,21 @@ public class TestGroupe {
 
     @BeforeEach
     public void setUp() throws Exception {
-        // Initialisation des identités
         Identite identite1 = new Identite("1", "John", "Doe");
         Identite identite2 = new Identite("2", "Jane", "Smith");
 
-        // Initialisation de la formation
+
         formation1 = new Formation(1);
         HashMap<String, Double> matieres = new HashMap<>();
         matieres.put("Mathématiques", 12.5);
         matieres.put("Informatique", 15.0);
-        matieres.put("Physique", 10.0); // Ajout de Physique avec un coefficient
+        matieres.put("Physique", 10.0);
         formation1.ajouterMatiere(matieres);
 
-        // Création des étudiants
+
         etudiant1 = new Etudiant(identite1, formation1);
         etudiant2 = new Etudiant(identite2, formation1);
 
-        // Ajout de notes pour les étudiants
         etudiant1.ajouterNote("Mathématiques", 15.0);
         etudiant1.ajouterNote("Physique", 12.0);
         etudiant1.ajouterNote("Informatique", 14.0);
@@ -38,7 +36,6 @@ public class TestGroupe {
         etudiant2.ajouterNote("Physique", 14.0);
         etudiant2.ajouterNote("Informatique", 16.0);
 
-        // Création du groupe avec le nom et la formation
         groupe = new Groupe("Groupe A", formation1);
         groupe.ajouterEtudiant(etudiant1);
         groupe.ajouterEtudiant(etudiant2);
@@ -65,7 +62,6 @@ public class TestGroupe {
 
     @Test
     public void testCalculerMoyenneGroupeSansNotesMatiere() throws Exception {
-        // Création d'un groupe sans notes pour simuler l'absence de notes
         Groupe groupeSansNotes = new Groupe("Groupe B", formation1);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {
@@ -76,7 +72,6 @@ public class TestGroupe {
 
     @Test
     public void testCalculerMoyenneGeneraleGroupeSansNotes() {
-        // Création d'un groupe sans aucune note
         Groupe groupeVide = new Groupe("Groupe Vide", formation1);
 
         Exception exception = assertThrows(IllegalStateException.class, () -> {
@@ -89,7 +84,6 @@ public class TestGroupe {
 
     @Test
     public void testMoyenneMatiereSansNotes() {
-        // Création d'un groupe avec un étudiant mais sans notes
         Groupe groupeSansNotes = new Groupe("Groupe C", formation1);
         Identite identite = new Identite("3", "Alice", "Brown");
         Etudiant etudiant = new Etudiant(identite, formation1);
